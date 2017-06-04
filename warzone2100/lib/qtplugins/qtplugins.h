@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QList>
 #include <QString>
+#include "qtpluginsinterface.h"
 
-#define PLUGINS_INTERFACE_VERSION "net.wz2100.Plugins.IPluginInterface/0.0.2"
-#define IHOST_INTERFACE_VERSION "net.wz2100.Plugins.IHostInterface/0.0.2"
+//#define PLUGINS_INTERFACE_VERSION "net.wz2100.Plugin.IHostInterface/0.0.2"
 
 class QtPluginsEngine;
 extern QtPluginsEngine* qtPlugins;
@@ -16,34 +16,8 @@ bool preparePlugins();
 bool shutdownPlugins();
 bool updatePlugins();
 
-
-class IHostInterface
-{
-public:
-    virtual ~IHostInterface() {}
-    virtual void dbg(QString msg) = 0;
-};
-
-Q_DECLARE_INTERFACE(IHostInterface, IHOST_INTERFACE_VERSION);
-
-class IPluginInterface
-{
-public:
-    virtual ~IPluginInterface() {}
-    virtual QString version() = 0;
-    virtual void setHostInterface(IHostInterface*) = 0;
-
-    // events callback
-    virtual void onLoad() = 0;
-
-    virtual void onStart() = 0;
-    virtual void onEnd(bool isWinner) = 0; // i'm win?
-    virtual void onFrame() = 0;
-};
-
-Q_DECLARE_INTERFACE(IPluginInterface, PLUGINS_INTERFACE_VERSION);
-
 class QtPluginsEngine : public QObject, public IHostInterface
+//class QtPluginsEngine : public IHostInterface
 {
     Q_OBJECT
     Q_INTERFACES(IHostInterface)
@@ -51,7 +25,11 @@ class QtPluginsEngine : public QObject, public IHostInterface
 public:
     QtPluginsEngine();
     ~QtPluginsEngine();
-    void dbg(QString msg);
+    void log(QString msg);
+    void err(QString msg);
+
+    // game info
+    QString gameVersion();
 
 private:
     IPluginInterface *iPluginInterface;

@@ -13,3 +13,4 @@ HEADERS    = qtpluginsengine.h \
              qtpluginsunitsdefs.h
 
 TARGET     = qtplugins
+

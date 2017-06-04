@@ -731,8 +731,6 @@ bool systemInitialise()
 
 	readAIs();
 
-	debug(LOG_INFO, "Init: initialize plugins");
-
 #ifdef WITH_QTPLUGINS
 	if (!initPlugins())             // Initialise the plugins system
 	{

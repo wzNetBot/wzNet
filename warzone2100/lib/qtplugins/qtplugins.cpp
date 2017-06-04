@@ -3,21 +3,21 @@
 #include <QDir>
 #include <QPluginLoader>
 #include "../framework/frame.h"
+#include "../../src/version.h"
 
 QtPluginsEngine *qtPlugins;
 
 bool initPlugins()
 {
-    debug(LOG_SCRIPT, "initialize plugins");
-    debug(LOG_INFO, "PE: initialize plugins");
+    debug(LOG_INFO, "initialize plugins");
     qtPlugins = new QtPluginsEngine();
+    debug(LOG_INFO, version_getVersionString());
     return true;
 }
 
 bool preparePlugins()
 {
-    debug(LOG_INFO, "PE: plugins preparations");
-    debug(LOG_SCRIPT, "plugins preparations");
+    debug(LOG_INFO, "plugins preparations");
     return true;
 }
 
@@ -29,6 +29,11 @@ bool shutdownPlugins()
 bool updatePlugins()
 {
     return true;
+}
+
+QString QtPluginsEngine::gameVersion()
+{
+    return QString(version_getVersionString());
 }
 
 QtPluginsEngine::QtPluginsEngine()
@@ -44,36 +49,42 @@ QtPluginsEngine::~QtPluginsEngine()
 
 bool QtPluginsEngine::loadPlugin()
 {
-    dbg("Trying load plugin");
+    log("Trying to load plugins");
     QDir pluginsDir("/home/scor/tmp/warzone-plugins/");
     pluginsDir.cd("plugins");
     const QString filter = "lib*.so";
     foreach (QString fileName, pluginsDir.entryList(QStringList() << filter, QDir::NoDotAndDotDot | QDir::Files)) {
-        dbg(QString("found plugin: %1").arg(pluginsDir.absoluteFilePath(fileName)));
+        log(QString("found plugin: %1").arg(pluginsDir.absoluteFilePath(fileName)));
         QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
         QObject *plugin = pluginLoader.instance();
         if (plugin) {
-            dbg("cast plugin pointer to IPluginInterface...");
+            log("cast plugin pointer to IPluginInterface...");
             iPluginInterface = qobject_cast<IPluginInterface *>(plugin);
             if (iPluginInterface){
-                dbg("OK");
+                log("OK");
                 iPluginInterface->setHostInterface(qobject_cast<IHostInterface *>(this));
                 iPluginInterface->onLoad();
                 return true;
             }else{
-                dbg("FAILED");
+                err("FAILED");
             }
         }else{
-            dbg("plugin instancing failed");
-            dbg(QString("err: %1").arg(pluginLoader.errorString()));
+            err("plugin instancing failed");
+            err(QString("err: %1").arg(pluginLoader.errorString()));
         }
     }
     return false;
 }
 
-void QtPluginsEngine::dbg(QString msg)
+void QtPluginsEngine::err(QString msg)
 {
-    debug(LOG_INFO, msg.toLatin1());
+    debug(LOG_ERROR, QString("[PluginsEngine] ERROR: %1").arg(msg).toLatin1());
+    return;
+}
+
+void QtPluginsEngine::log(QString msg)
+{
+    debug(LOG_INFO, QString("[PluginsEngine] INFO: %1").arg(msg).toLatin1());
     return;
 }
 
