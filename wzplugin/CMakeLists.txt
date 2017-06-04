@@ -13,8 +13,8 @@ list(APPEND HEADERS ${PROJECT_SOURCE_DIR}/../warzone2100/lib/qtplugins/qtplugins
 list(APPEND Q_HEADERS ${PROJECT_SOURCE_DIR}/qbotnet.h ${PROJECT_SOURCE_DIR}/../warzone2100/lib/qtplugins/qtpluginsinterface.h)
 list(APPEND Q_SOURCES ${PROJECT_SOURCE_DIR}/qbotnet.cpp)
 
-add_library(${PROJECT_NAME} SHARED ${HEDARS} ${SOURCES} ${Q_HEDARS} ${Q_SOURCES} ${MOC_SOURCES})
-target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
+add_library(${PROJECT_NAME} SHARED ${HEADERS} ${SOURCES} ${Q_HEADERS} ${Q_SOURCES} ${MOC_SOURCES})
+target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} Qt5::Core)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 #target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} wzNetCapnp)

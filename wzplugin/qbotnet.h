@@ -1,9 +1,10 @@
 #ifndef QBOTNET_H
 #define QBOTNET_H
-
+#include <QObject>
+#include <QString>
 #include "../warzone2100/lib/qtplugins/qtpluginsinterface.h"
 
-class QBotNet : public IPluginInterface
+class QBotNet : public QObject, public IPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID PLUGINS_INTERFACE_VERSION FILE "qBotNet.json")

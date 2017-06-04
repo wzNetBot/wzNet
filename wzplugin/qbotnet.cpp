@@ -9,6 +9,7 @@ QBotNet::QBotNet(QObject *parent)
 void QBotNet::onLoad()
 {
     log("Starting qBotNet");
+    log(QString("Warzone version: %1").arg(iHost->gameVersion()));
 }
 
 void QBotNet::err(QString msg)
