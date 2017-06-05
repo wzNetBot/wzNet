@@ -14,6 +14,9 @@ public:
     virtual void log(QString msg) = 0;
     virtual void err(QString msg) = 0;
 
+    // wz callbacks
+    virtual void update() = 0;
+
     // game info
     virtual QString gameVersion() = 0;
 };

@@ -4,13 +4,15 @@
 #include <QPluginLoader>
 #include "../framework/frame.h"
 #include "../../src/version.h"
+#include "../../src/objects.h"
+#include "../../src/objmem.h"
 
-QtPluginsEngine *qtPlugins;
+QtPluginsEngine *pe;
 
 bool initPlugins()
 {
     debug(LOG_INFO, "initialize plugins");
-    qtPlugins = new QtPluginsEngine();
+    pe = new QtPluginsEngine();
     debug(LOG_INFO, version_getVersionString());
     return true;
 }
@@ -28,12 +30,29 @@ bool shutdownPlugins()
 
 bool updatePlugins()
 {
+//    debug(LOG_INFO,"updatePlugins called");
+    if (pe) pe->update();
     return true;
 }
 
 QString QtPluginsEngine::gameVersion()
 {
     return QString(version_getVersionString());
+}
+
+void QtPluginsEngine::update()
+{
+//    log("update engine");
+    BASE_OBJECT *psCurr;
+    BASE_OBJECT *psList = (BASE_OBJECT*)apsDroidLists[0];
+
+    for (psCurr = psList; psCurr; psCurr = psCurr->psNext)
+    {
+        if (psCurr->type == OBJ_DROID)
+        {
+            log(objInfo(psCurr));
+        }
+    }
 }
 
 QtPluginsEngine::QtPluginsEngine()

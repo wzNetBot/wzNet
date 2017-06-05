@@ -28,6 +28,9 @@ public:
     void log(QString msg);
     void err(QString msg);
 
+    // callbacks from warzone
+    void update();
+
     // game info
     QString gameVersion();
 
