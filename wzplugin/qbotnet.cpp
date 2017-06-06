@@ -1,14 +1,45 @@
 #include "qbotnet.h"
-#include <QtCore/QString>
+#include <QString>
+#include <QThread>
+#include <thread>
+#include <capnp/ez-rpc.h>
+#include <kj/debug.h>
+#include "../common/capnp/wzNet.capnp.h"
 
+class WzNetImpl final: public WzNet::Server {
+public:
+    WzNetImpl(IHostInterface* p){ iHost = p; }
+
+  kj::Promise<void> wzVersion(WzVersionContext context) {
+    context.getResults().setValue(iHost->gameVersion().toLatin1().data());
+    return kj::READY_NOW;
+  }
+private:
+  IHostInterface *iHost;
+};
+
+void startRPC(IHostInterface *iHost)
+{
+    capnp::EzRpcServer server(kj::heap<WzNetImpl>(iHost), "127.0.0.1", 5566);
+    auto& waitScope = server.getWaitScope();
+    iHost->err("test from srv");
+    kj::NEVER_DONE.wait(waitScope);
+}
 
 QBotNet::QBotNet(QObject *parent)
 {
 }
 
+void QBotNet::startRPCServer()
+{
+    std::thread t(startRPC, iHost);
+    t.detach();
+}
+
 void QBotNet::onLoad()
 {
     log("Starting qBotNet");
+    startRPCServer();
     log(QString("Warzone version: %1").arg(iHost->gameVersion()));
 }
 

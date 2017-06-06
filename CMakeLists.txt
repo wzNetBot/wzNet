@@ -9,4 +9,4 @@ project(wzNet)
 
 #subdirs(client server wzplugin)
 #subdirs(common client)
-subdirs(common server client)
+subdirs(common server client wzplugin)
