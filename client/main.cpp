@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     }
 
     capnp::EzRpcClient client(argv[1]);
-    WzNet::Client cl = client.getMain<WzNet>();
+    WzNet::Host::Client cl = client.getMain<WzNet::Host>();
 
     auto& waitScope = client.getWaitScope();
     {

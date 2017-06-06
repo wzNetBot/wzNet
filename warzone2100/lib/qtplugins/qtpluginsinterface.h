@@ -16,6 +16,7 @@ public:
 
     // wz callbacks
     virtual void update() = 0;
+//    virtual void evAttacked();
 
     // game info
     virtual QString gameVersion() = 0;
@@ -35,7 +36,7 @@ public:
     virtual void onFrame() = 0;
 
     // inGame events callbacks
-
+    virtual void evAttacked() = 0;
     // inGame actions
 
 };

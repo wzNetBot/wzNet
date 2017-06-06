@@ -4,7 +4,7 @@
 #include <kj/debug.h>
 
 
-class WzNetImpl final: public WzNet::Server {
+class WzNetImpl final: public WzNet::Host::Server {
 public:
 //  kj::Promise<kj::String> wzVersion(WzVersionContext context) {
   kj::Promise<void> wzVersion(WzVersionContext context) {

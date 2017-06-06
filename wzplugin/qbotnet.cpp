@@ -6,7 +6,7 @@
 #include <kj/debug.h>
 #include "../common/capnp/wzNet.capnp.h"
 
-class WzNetImpl final: public WzNet::Server {
+class WzNetImpl final: public WzNet::Host::Server {
 public:
     WzNetImpl(IHostInterface* p){ iHost = p; }
 
@@ -34,6 +34,11 @@ void QBotNet::startRPCServer()
 {
     std::thread t(startRPC, iHost);
     t.detach();
+}
+
+void QBotNet::evAttacked()
+{
+    log("Attacked");
 }
 
 void QBotNet::onLoad()

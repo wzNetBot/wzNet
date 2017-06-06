@@ -23,7 +23,8 @@ public:
     void onStart() {}
     void onEnd(bool) {}
     void onFrame() {}
-
+    // inGame events callbacks
+    void evAttacked();
 
 private:
     IHostInterface *iHost;

@@ -2,8 +2,15 @@
 
 interface WzNet {
 
-  wzVersion @0 () -> (value: Text); # string version of Warzone
-  peVersion @1 () -> (value: Text); # string version of PluginsEngine
+  interface Host {
+    wzVersion @0 () -> (value: Text); # string version of Warzone
+    peVersion @1 () -> (value: Text); # string version of PluginsEngine
+  }
+
+  interface Callback {
+  # client event callbacks
+
+  }
 
 #  TODO: realize predicates and evolition fn for it
 #  findDroids @2 (pred :Predicate) -> (droids: List<Droid>);
