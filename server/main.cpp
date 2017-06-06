@@ -4,9 +4,13 @@
 #include <kj/debug.h>
 
 
-class WZNetImpl final: public WZNet::Server {
+class WzNetImpl final: public WzNet::Server {
 public:
-  kj::Promise<void>
+//  kj::Promise<kj::String> wzVersion(WzVersionContext context) {
+  kj::Promise<void> wzVersion(WzVersionContext context) {
+    context.getResults().setValue("bebebe");
+    return kj::READY_NOW;
+  }
 };
 
 int main(int argc, const char* argv[]) {
@@ -19,7 +23,7 @@ int main(int argc, const char* argv[]) {
   }
 
   // Set up a server.
-  capnp::EzRpcServer server(kj::heap<CalculatorImpl>(), argv[1]);
+  capnp::EzRpcServer server(kj::heap<WzNetImpl>(), argv[1]);
 
   // Write the port number to stdout, in case it was chosen automatically.
   auto& waitScope = server.getWaitScope();

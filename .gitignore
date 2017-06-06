@@ -1,3 +1,6 @@
 build/*
+*/build/*
 */__nix_qt5__
 __nix_qt5__/
+CMakeLists.txt.user
+*.swp

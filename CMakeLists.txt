@@ -8,4 +8,5 @@ project(wzNet)
 #capnp_generate_cpp(wzNetSources wzNetHeaders ./common/capnp/wzNet.capnp)
 
 #subdirs(client server wzplugin)
-subdirs(common client)
+#subdirs(common client)
+subdirs(common server client)

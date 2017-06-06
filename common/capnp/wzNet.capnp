@@ -1,38 +1,51 @@
 @0xc1fb4f9ae0b77ec1;
 
-interface WZNet {
+interface WzNet {
 
-  evaluate @0 (expression :Expression) -> (value :Value);
-  struct Expression {
-    union {
-      literal @0 :Float64;
-      previousResult @1 :Value;
-      parameter @2 :UInt32;
-      call :group {
-        function @3 :Function;
-        params @4 :List(Expression);
-      }
-    }
-  }
+  wzVersion @0 () -> (value: Text); # string version of Warzone
+  peVersion @1 () -> (value: Text); # string version of PluginsEngine
 
-  interface Value {
-    read @0 () -> (value :Float64);
-  }
+#  TODO: realize predicates and evolition fn for it
+#  findDroids @2 (pred :Predicate) -> (droids: List<Droid>);
+#  clearQueue @3 (droids: List<Droid>) -> ();
+#  appendCommand @4 (droids: List<Droid>) -> ();
+#  insertCommand @5 (droids: List<Droid>) -> ();
 
-  defFunction @1 (paramCount :Int32, body :Expression) -> (func :Function);
+#  interface Predicate {
+#    call @0 (expr: Expression) -> (res: Bool);
+#  }
 
-  interface Function {
-    call @0 (params :List(Float64)) -> (value :Float64);
-  }
+#  evaluate @0 (expression :Expression) -> (value :Value);
+#  struct Expression {
+#    union {
+#      literal @0 :Float64;
+#      previousResult @1 :Value;
+#      parameter @2 :UInt32;
+#      call :group {
+#        function @3 :Function;
+#        params @4 :List(Expression);
+#      }
+#    }
+#  }
 
-  getOperator @2 (op :Operator) -> (func :Function);
+#  interface Value {
+#    read @0 () -> (value :Float64);
+#  }
 
-  enum Operator {
-    add @0;
-    subtract @1;
-    multiply @2;
-    divide @3;
-  }
+#  defFunction @1 (paramCount :Int32, body :Expression) -> (func :Function);
+
+#  interface Function {
+#    call @0 (params :List(Float64)) -> (value :Float64);
+#  }
+
+#  getOperator @2 (op :Operator) -> (func :Function);
+
+#  enum Operator {
+#    add @0;
+#    subtract @1;
+#    multiply @2;
+#    divide @3;
+#  }
 
   enum DroidAction {
     none @0;

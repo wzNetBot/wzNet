@@ -6,8 +6,10 @@
 
 using namespace std;
 
-class WZNetClient final : public WZNet::Function::Server {
+/*
+class WzNetClient final : public WZNet::Function::Server {
 public:
+    kj::Promise<kj::String> wzVersion();
     kj::Promise<void> call(CallContext context){
         auto params = context.getParams().getParams();
         KJ_REQUIRE(params.size() == 2, "wrong number of parameters.");
@@ -15,6 +17,7 @@ public:
         return kj::READY_NOW;
     }
 };
+*/
 
 int main(int argc, char *argv[])
 {
@@ -26,10 +29,22 @@ int main(int argc, char *argv[])
     }
 
     capnp::EzRpcClient client(argv[1]);
-    WZNet::Client cl = client.getMain<WZNet>();
+    WzNet::Client cl = client.getMain<WzNet>();
 
     auto& waitScope = client.getWaitScope();
     {
+	std::cout << "requesting wzVersion..." << endl;
+	std::cout.flush();
+
+	auto request = cl.wzVersionRequest();
+
+	auto evalPromise = request.send();
+	auto response = evalPromise.wait(waitScope);
+	auto ver = response.getValue();
+
+	std::cout << "wzVer: " << ver.cStr() << endl;
+	
+/*
         std::cout << "Using a callback... ";
         std::cout.flush();
 
@@ -57,8 +72,8 @@ int main(int argc, char *argv[])
         // send request and wait
         auto response = request.send().getValue().readRequest()
                 .send().wait(waitScope);
-
-        std::cout << "Result:" << response.getValue() << endl;
+*/
+//        std::cout << "Result:" << response.getValue() << endl;
     }
     return 0;
 }
