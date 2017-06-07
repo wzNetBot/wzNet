@@ -15,6 +15,7 @@ bool initPlugins();
 bool preparePlugins();
 bool shutdownPlugins();
 bool updatePlugins();
+void evAttacked();
 
 class QtPluginsEngine : public QObject, public IHostInterface
 //class QtPluginsEngine : public IHostInterface
@@ -30,6 +31,7 @@ public:
 
     // callbacks from warzone
     void update();
+    void evAttacked();
 
     // game info
     QString gameVersion();

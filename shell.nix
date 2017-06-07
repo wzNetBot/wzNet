@@ -16,7 +16,11 @@ pkgs.stdenv.mkDerivation rec {
   name = "wzNet-${version}";
   version = "0.0.1.0";
   nativeBuildInputs = with pkgs; [ cmake gnumake gcc ];
-  buildInputs = [ capnproto ];
+  buildInputs = [
+    pkgs.qt5.qtbase
+    pkgs.qt5.qtscript
+    capnproto
+  ];
   shellHook = ''
     echo "to compile:"
     echo "mkdir -p build && cd build && cmake ../ && make"

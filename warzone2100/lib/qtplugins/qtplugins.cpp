@@ -35,6 +35,16 @@ bool updatePlugins()
     return true;
 }
 
+void evAttacked(){
+    if (pe) pe->evAttacked();
+}
+
+void QtPluginsEngine::evAttacked()
+{
+    //log("Attacked");
+    iPluginInterface->evAttacked();
+}
+
 QString QtPluginsEngine::gameVersion()
 {
     return QString(version_getVersionString());
@@ -43,6 +53,7 @@ QString QtPluginsEngine::gameVersion()
 void QtPluginsEngine::update()
 {
 //    log("update engine");
+/*
     BASE_OBJECT *psCurr;
     BASE_OBJECT *psList = (BASE_OBJECT*)apsDroidLists[0];
 
@@ -53,6 +64,7 @@ void QtPluginsEngine::update()
             log(objInfo(psCurr));
         }
     }
+    */
 }
 
 QtPluginsEngine::QtPluginsEngine()

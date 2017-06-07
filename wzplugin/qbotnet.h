@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QString>
 #include "../warzone2100/lib/qtplugins/qtpluginsinterface.h"
+#include "rpcserver.h"
 
 class QBotNet : public QObject, public IPluginInterface
 {
@@ -12,6 +13,7 @@ class QBotNet : public QObject, public IPluginInterface
 
 public:
     QBotNet(QObject *parent = 0);
+    ~QBotNet();
     void err(QString);
     void log(QString);
     void onLoad();
@@ -22,10 +24,13 @@ public:
     void onStart() {}
     void onEnd(bool) {}
     void onFrame() {}
-
+    // inGame events callbacks
+    void evAttacked();
 
 private:
     IHostInterface *iHost;
+
+    void startRPCServer();
 };
 
 #endif // QBOTNET_H

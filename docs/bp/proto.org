@@ -1,0 +1,14 @@
+* Abstract
+* Objects
+* Functions
+** Server-side
+*** Common
+    - wzVersion :: Text
+    - peVersion :: Text
+*** Events
+    - subscrOn :: [Event] -> [Event]
+*** Actions
+    - action :: Object -> Action -> Parameter -> Either
+** Client-side
+   - pName :: Text
+   - pVersion :: Text
