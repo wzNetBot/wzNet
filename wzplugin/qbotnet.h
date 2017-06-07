@@ -13,6 +13,7 @@ class QBotNet : public QObject, public IPluginInterface
 
 public:
     QBotNet(QObject *parent = 0);
+    ~QBotNet();
     void err(QString);
     void log(QString);
     void onLoad();
